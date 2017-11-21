@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+PortFoloio Items report</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>  
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+var rallyAPIUrl = "https://rally1.rallydev.com//slm/webservice/v2.x"
+function httpget() {
+	
+	var dataParam
+    var theUrl = "https://rally1.rallydev.com/slm/webservice/v2.x/PortfolioItem/Feature?workspace=/workspace/5048769518&query=&fetch=Name&compact=true";
+  	alert ("functionCalling");
+    var xmlHttp = new XMLHttpRequest();
+	xmlHttp.open("GET", theUrl, false); // false for synchronous request
+	var xmlrequest = xmlHttp.setRequestHeader("zsessionid", "_1tjEtYmQR6EMrKmZYa5OwfIs5ScXkWTppfFfqsKwM");
+	alert("xml http status: "+xmlHttp.status)
+	
+	xmlHttp.send();
+	
+	//xmlHttp.send(null);
+   	alert("http response text: "+xmlHttp.responseText);	
+	
+	testpopulate(xmlHttp)
+	
+}
+
+function myFunction(){
+    alert ("functionCalling");
+}
+function testpopulate( xmlHttp1) {
+var x;
+	var xmlHttp = new XMLHttpRequest();
+	alert("Step-1");
+	
+	alert(xmlHttp1.responseText);
+	var myData = xmlHttp1.responseText;
+	alert(myData);
+    alert("Step-function_end");
+	  
+	  
+	// EXTRACT VALUE FOR HTML HEADER.   
+	  
+	var col = [];
+        for (var i = 0; i < myData.length; i++) {
+		
+            for (var key in myData[i]) {
+                if (col.indexOf(key) == -1) {
+                    col.push(key);
+					alert(key);
+                }
+            }
+        }  
+	  
+	   // CREATE DYNAMIC TABLE.
+        var table = document.createElement("table");	  
+	  
+	
+    var myTable = "<table><tr><td style='width: 10px; color: red;'></td>";
+    myTable += "<td style='width: 10px; color: red; text-align: right;'>ID</td>";
+    myTable+= "<td style='width: 100px; color: red; text-align: right;'>Name</td>";
+    myTable += "<td style='width: 100px; color: red; text-align: right;'>Release</td>";
+    myTable += "<td style='width: 100px; color: red; text-align: right;'>State</td></tr>";
+    myTable += "<tr><td><img src=images/s.gif alt=/></td>";
+    myTable += "<td style='width: 10px; color: red; text-align: right;'>F123</td>";
+    myTable += "<td style='width: 100px; color: red; text-align: right;'>Deepak</td>";
+    myTable += "<td style='width: 100px; color: red; text-align: right;'>None</td>";
+    myTable += "<td style='width: 100px; color: red; text-align: right;'>Done</td></tr>";
+    myTable += "</table>";
+    document.getElementById('tablePrint').innerHTML = xmlHttp1.responseText;
+	
+	
+}
+function loadportfolioitem(ptype){
+
+alert("Function callied with value: "+ptype)
+
+
+	var theUrl1 = "https://rally1.rallydev.com/slm/webservice/v2.x/PortfolioItem/" //+$ptype + "?workspace=/workspace/5048769518&query=&fetch=Name&compact=true";
+	alert ("functionCalling");
+	alert ("displaying URL: "+theUrl1);
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.open("GET", theUrl1, false); // false for synchronous request
+	xmlHttp.setRequestHeader("zsessionid", "_1tjEtYmQR6EMrKmZYa5OwfIs5ScXkWTppfFfqsKwM");
+	alert(xmlHttp.status)
+	xmlHttp.send(null);
+	
+	alert(xmlHttp.responseText);
+	//alert(xmlHttp.responseXML);
+	var httpDoc = xmlHttp.responseText.documentElement;
+	
+	testpopulate(xmlHttp)
+	
+}
+
+</script>
+<style>
+        table, th, td 
+        {
+            margin:10px 0;
+            border:solid 1px #333;
+            padding:2px 4px;
+            font:15px Verdana;
+        }
+        th {
+            font-weight:bold;
+        }
+    </style>
+	
+	
+	
+</head>
+
+<!--body onload="testpopulate()"-->
+<body  onload="httpget()">
+
+    <div class= "header" style= "position: relative; top: 05px; left: 3px; width: 1400px; height: 40px; background-color: black;">
+    Project Portfolio
+    </div>
+
+    <div class= "menu_div" style= " position: absolute; top:50px; list-style: none; font-size: 14px; line-height: 32px; font-weight: bold">
+    Portfolio Items <select name = "menu" onchange = "loadportfolioitem(this.value)">
+                    <option  value="Epic"> Epic</option>
+				    <option  value="Feature"> Feature </option>
+				    <option  value="Capability"> Capability </option>
+				    </select>
+    </div>
+    <div position: absolute; top:80px; list-style: none; font-size: 14px; line-height: 32px; font-weight: bold">
+    <img src="images/s.gif" alt="Header" />
+    </div>
+    
+    <div id="tablePrint" class="hidden" style= "position: relative; top:95px; height: 500px; border-style: solid;">
+		
+		<tr>
+			
+		</tr>	
+		
+    </div>
+	<div id="example-table"></div>
+	
+	
+	
+	
+	
+</body>
+</html>

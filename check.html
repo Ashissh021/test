@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<body  onload="change_myselect()">
+
+<h2>Make a table based on the value of a drop down menu.</h2>
+
+ <div class= "menu_div" style= " position: absolute; top:50px; list-style: none; font-size: 14px; line-height: 32px; font-weight: bold">
+    Portfolio Items <select name = "menu" onchange = "change_myselect(this.value)">
+                    <option  value="Epic"> Epic</option>
+				    <option  value="Feature"> Feature </option>
+				    <option  value="Capability"> Capability </option>
+
+<p id="demo"></p>
+
+<div id="example-table"></div>
+
+<script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous">
+</script>
+<script   src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"   integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="   crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdn.rawgit.com/olifolkerd/tabulator/master/tabulator.css">
+  <script type="text/javascript" src="https://cdn.rawgit.com/olifolkerd/tabulator/master/tabulator.js"></script>
+
+
+<script>
+
+function change_myselect(sel) {
+
+ var obj, dbParam, xmlhttp, myObj, x, txt = "";
+  var theUrl = "https://rally1.rallydev.com/slm/webservice/v2.x/PortfolioItem/Feature?workspace=/workspace/5048769518&query=&fetch=Name&compact=true";
+  	alert ("Calling");
+    
+  //obj = { "StartIndex":1,"table":sel, "PageSize":20 };
+  //dbParam = JSON.stringify(obj);
+  
+  xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      myObj = JSON.parse(this.responseText);
+	  alert(myObj.QueryResult.PageSize);
+	  alert(myObj.QueryResult.Results)
+	  alert(myObj.QueryResult.Results[0]._ref);
+	  //alert(myObj.QueryResult.Results[0].name);
+	  //alert(myObj.QueryResult.Results[0].key);
+      txt += "<table border='1'>"
+	  
+	  $("#example-table").tabulator("setData", myObj.QueryResult.Results);
+	  $(window).resize(function(){
+		$("#example-table").tabulator("redraw");
+		});
+
+		$("#example-table").tabulator({
+  height:"300px",
+  fitColumns:true,
+  columns:[
+    {title:"_ref", field:"_ref",  sortable:true, width:200},
+    {title:"RefObjectUUID", field:"_refObjectUUID", sortable:true, sorter:"number"},
+    {title:"RefObjectName", field:"_refObjectName", sortable:true},
+    {title:"Type", field:"_type", sortable:false},
+    {title:"Name", field:"Name"},
+  ],
+});
+		
+	  
+      for (x in myObj.QueryResult.PageSize) {
+			//alert(x.PageSize);
+        txt += "<tr><td>" + myObj.QueryResult.Results[0]._ref + "</td></tr>";
+	   //myObj[x].QueryResult
+      }
+      txt += "</table>"        
+	  alert(txt);
+      document.getElementById("demo").innerHTML = txt;
+    }
+  };
+  xmlhttp.open("GET", theUrl, false);
+  var xmlrequest = xmlhttp.setRequestHeader("zsessionid", "_1tjEtYmQR6EMrKmZYa5OwfIs5ScXkWTppfFfqsKwM");
+ // xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xmlhttp.send();
+}
+</script>
+
+
+
+
+
+</body>
+</html>
