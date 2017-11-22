@@ -1,19 +1,7 @@
 <!DOCTYPE html>
 <html>
-<body  onload="change_myselect()">
-
-<h2>Make a table based on the value of a drop down menu.</h2>
-
- <div class= "menu_div" style= " position: absolute; top:50px; list-style: none; font-size: 14px; line-height: 32px; font-weight: bold">
-    Portfolio Items <select name = "menu" onchange = "change_myselect(this.value)">
-                    <option  value="Epic"> Epic</option>
-				    <option  value="Feature"> Feature </option>
-				    <option  value="Capability"> Capability </option>
-
-<p id="demo"></p>
-
-<div id="example-table"></div>
-
+<head>
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"/>
 <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous">
 </script>
 <script   src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"   integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="   crossorigin="anonymous"></script>
@@ -21,7 +9,24 @@
   <link rel="stylesheet" href="https://cdn.rawgit.com/olifolkerd/tabulator/master/tabulator.css">
   <script type="text/javascript" src="https://cdn.rawgit.com/olifolkerd/tabulator/master/tabulator.js"></script>
 
+ <link rel="stylesheet" href="main.css">
+</head>
+<body  onload="change_myselect()">
 
+<h2></h2>
+
+<div class= "menu_div" style= " position: absolute; top:50px; list-style: none; font-size: 14px; line-height: 32px; font-weight: bold">
+    Portfolio Items <select name = "menu" onchange = "change_myselect(this.value)">
+                    <option  value="Epic"> Epic</option>
+				    <option  value="Feature"> Feature </option>
+				    <option  value="Capability"> Capability </option>
+
+<p id="demo"></p>
+
+
+<div id="example-table" class ="CSSTableGenerator">
+
+</div>
 <script>
 
 function change_myselect(sel) {
@@ -44,44 +49,47 @@ function change_myselect(sel) {
 	  //alert(myObj.QueryResult.Results[0].key);
       txt += "<table border='1'>"
 	  
-	  $("#example-table").tabulator("setData", myObj.QueryResult.Results);
-	  $(window).resize(function(){
-		$("#example-table").tabulator("redraw");
-		});
-
-		$("#example-table").tabulator({
-  height:"300px",
-  fitColumns:true,
-  columns:[
-    {title:"_ref", field:"_ref",  sortable:true, width:200},
-    {title:"RefObjectUUID", field:"_refObjectUUID", sortable:true, sorter:"number"},
-    {title:"RefObjectName", field:"_refObjectName", sortable:true},
-    {title:"Type", field:"_type", sortable:false},
-    {title:"Name", field:"Name"},
-  ],
-});
-		
 	  
-      for (x in myObj.QueryResult.PageSize) {
+    /*  for (x in myObj.QueryResult.PageSize) {
 			//alert(x.PageSize);
         txt += "<tr><td>" + myObj.QueryResult.Results[0]._ref + "</td></tr>";
 	   //myObj[x].QueryResult
       }
       txt += "</table>"        
 	  alert(txt);
-      document.getElementById("demo").innerHTML = txt;
+      document.getElementById("demo").innerHTML = txt; */
     }
   };
   xmlhttp.open("GET", theUrl, false);
   var xmlrequest = xmlhttp.setRequestHeader("zsessionid", "_1tjEtYmQR6EMrKmZYa5OwfIs5ScXkWTppfFfqsKwM");
  // xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xmlhttp.send();
+  
+$(document).ready(function() {
+       var cityTable = makeTable($(document.body), myObj);
+});
+
 }
+
+function makeTable(container, data) {
+
+ var table = $("<table/>").addClass('CSSTableGenerator');
+var header = $("<th>Ref</th>" + "<th>RefObjectUUID</th>" + "<th>RefObjectName</th>" + "<th>Name</th>" + "<th>Type</th>").addClass('CSSTableGenerator');
+	
+	
+	
+	table.append(header);
+    $.each(data.QueryResult.Results, function(rowIndex, r) {
+        var row = $("<tr/>");
+        $.each(r, function(colIndex, c) { 
+            row.append($("<t"+(rowIndex == 0 ?  "d" : "d")+"/>").text(c));
+        });
+        table.append(row);
+    });
+    return container.append(table);
+}
+
+
 </script>
-
-
-
-
-
 </body>
 </html>
