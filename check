@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Import Data From Excel</title>
+
+    <!-- Ignite UI Required Combined CSS Files -->
+    <link href="http://cdn-na.infragistics.com/igniteui/2016.2/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="http://cdn-na.infragistics.com/igniteui/2016.2/latest/css/structure/infragistics.css" rel="stylesheet" />
+
+    <style>
+        #sampleContainer ol {
+            padding: 0px 0px 0px 15px;
+            margin: 0;
+        }
+
+        #sampleContainer input {
+            margin: 10px 0;
+        }
+        #result {
+            display: none;
+            color: red;	
+        }
+		#graph {
+			position: absolute;
+			width: 800px;
+			height: 500px;
+			z-index: 15;
+			top: 25%;
+			left: 50%;
+			margin: -100px 0 0 -150px;
+			background: white;
+}
+    </style>
+    <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/infragistics.core.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/infragistics.lob.js"></script>
+
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_core.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_collections.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_text.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_io.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_ui.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.documents.core_core.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_collectionsextended.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.excel_core.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_threading.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_web.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.xml.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.documents.core_openxml.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.excel_serialization_openxml.js"></script>
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<script type="text/javascript" src="C:\Users\ashriv13\Desktop\graph\New folder\highcharts.js"></script> 
+	<script type="text/javascript" src="http://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
+	<script type="text/javascript" src="https://code.highcharts.com/modules/series-label.js"></script>
+	<script type="text/javascript" src="https://code.highcharts.com/modules/exporting.js"></script>
+	
+	<!-- Ignite UI Required Combined CSS Files -->
+    <link type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/css/structure/infragistics.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/infragistics.core.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/infragistics.dv.js"></script>
+	 <script type="text/javascript" src="https://www.igniteui.com/data-files/world-energy-production.js">    </script>
+	
+	
+</head>
+<body>
+    <div>
+        <ol>
+            <li>Click Choose File/Browse button below and pick the sample Excel file or another excel file.</li>
+        </ol>
+        <!--<input type="file" id="input" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>-->
+		<input type="file" id="input" src="C:\Users\ashriv13\Desktop\graph\New folder\data.xlsx"/>
+        <div id="result"></div>
+        <table id="grid1"></table>
+		<p id="test">Graph is <b>going</b> to generate.</p>
+		
+	<!--	<input id="xValue" type="number" step="any" placeholder="Enter X-Value"> Y Value:
+    <input id="yValue" type="number" step="any" placeholder="Enter Y-Value">
+    <button id="renderButton" >Add DataPoint & Render</button> -->
+		<div id="graphContainer" style="higth: 270px; width: 50%;">
+	<!--<button id="graphGenerate">Click to Generate Graph</button> -->
+		<div id="graph"></div>
+		<div id="chart"></div>
+		
+    </div>
+    <script type="text/javascript">
+
+        $(function () {
+		
+            $("#input").on("change", function () {
+                var excelFile,  
+                    fileReader = new FileReader();
+				
+					
+                $("#result").hide();
+
+                fileReader.onload = function (e) {
+					
+                    var buffer = new Uint8Array(fileReader.result);
+
+                    $.ig.excel.Workbook.load(buffer, function (workbook) {
+                        var column, row, newRow, cellValue, columnIndex, i, rowCount,
+                            worksheet = workbook.worksheets(0), 
+                            columnsNumber = 0,
+                            gridColumns = [],
+                            data = [],
+                            worksheetRowsCount;
+
+                        // Both the columns and rows in the worksheet are lazily created and because of this most of the time worksheet.columns().count() will return 0
+                        // So to get the number of columns we read the values in the first row and count. When value is null we stop counting columns:
+                        while (worksheet.rows(0).getCellValue(columnsNumber)) {
+                            columnsNumber++;
+                        }
+
+                        // Iterating through cells in first row and use the cell text as key and header text for the grid columns
+                        for (columnIndex = 0; columnIndex < columnsNumber; columnIndex++) {
+                            column = worksheet.rows(0).getCellText(columnIndex);		
+                            gridColumns.push({ headerText: column, key: column });
+                        }
+
+                        // We start iterating from 1, because we already read the first row to build the gridColumns array above
+                        // We use each cell value and add it to json array, which will be used as dataSource for the grid
+                        for (i = 1, worksheetRowsCount = worksheet.rows().count() ; i < worksheetRowsCount; i++) {
+                            newRow = {};
+                            row = worksheet.rows(i);
+
+                            for (columnIndex = 0; columnIndex < columnsNumber; columnIndex++) {
+                                cellValue = row.getCellText(columnIndex);
+                                newRow[gridColumns[columnIndex].key] = cellValue;
+								rowCount++;
+                            }
+                            data.push(newRow);
+							alert(data);
+							alert(gridColumns);
+                        }
+
+                        // we can also skip passing the gridColumns use autoGenerateColumns = true, or modify the gridColumns array
+                        createGrid(data, gridColumns, rowCount);
+						createChart(data,gridColumns);
+						Highcharts.chart('graph', {
+						
+						
+							title: {
+								text: 'Gac Application chart'
+							},xAxis: {
+								categories: ['Jan', 'FEB', 'MAR', 'APR', 'MAY']
+								
+							},labels: {
+							items: [{
+								html: 'Total Gac utilization',
+								style: {
+									left: '30px',
+									top: '10px',
+									color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+								}
+								}]
+							},series: [{
+								type: 'column',
+								name: 'total',
+								data: [8, 8, 8, 8, 8]
+							}, {
+								type: 'column',
+								name: 'Gac',
+								data: [2, 3, 5, 7, 6]
+							}, {
+								type: 'column',
+								name: 'None-Gac',
+								data: [4, 3, 3, 9, 0]
+							}, {
+								type: 'spline',
+								name: 'Average',
+								data: [3, 2.67, 3, 6.33, 3.33],
+								marker: {
+									lineWidth: 3,
+									lineColor: Highcharts.getOptions().colors[3],
+									fillColor: 'white'
+								}
+							}, {
+								type: 'pie',
+								name: 'Total consumption',
+								data: [{
+									name: 'total',
+									y: 13,
+									color: Highcharts.getOptions().colors[0] // Jane's color
+								}, {
+									name: 'Gac',
+									y: 23,
+									color: Highcharts.getOptions().colors[1] // John's color
+								}, {
+									name: 'None-Gac',
+									y: 19,
+									color: Highcharts.getOptions().colors[2] // Joe's color
+								}],
+								center: [240, 10],
+								size: 100,
+								showInLegend: false,
+								dataLabels: {
+									enabled: false
+								}
+							}]
+						
+						});
+					}, function (error) {
+                        $("#result").text("The excel file is corrupted.");
+                        $("#result").show(1000);
+                    });
+				}
+
+                if (this.files.length > 0) {
+                    excelFile = this.files[0];
+                    if (excelFile.type === "application/vnd.ms-excel" || excelFile.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || (excelFile.type === "" && (excelFile.name.endsWith("xls") || excelFile.name.endsWith("xlsx")))) {
+                        fileReader.readAsArrayBuffer(excelFile);
+                    } else {
+                        $("#result").text("The format of the file you have selected is not supported. Please select a valid Excel file ('.xls, *.xlsx').");
+                        $("#result").show(1000);
+                    }
+                }
+
+            });
+				/*$("#graphGenerate").click(function(){
+					alert("Text: " + $("#test").text());
+					var excelFile,
+						fileReader = new FileReader();
+						
+					$("#graph").hide();
+					var buffer = new Uint8Array(fileReader.graph);
+					//alert("Buffer->"buffer);
+					 $.ig.excel.Workbook.load(buffer, function (workbook) {
+						alert("");
+						var column, row, newRow, cellValue, columnIndex, i,
+                            worksheet = workbook.worksheets(0), 
+                            columnsNumber = 0,
+                            gridColumns = [],
+                            data = [],
+                            worksheetRowsCount;					
+					});
+				}); */
+				
+		
+				
+				
+       });
+						
+        function createGrid(data, gridColumns, rowCount) {
+            if ($("#grid1").data("igGrid") !== undefined) {
+                $("#grid1").igGrid("destroy");
+            }
+			
+            $("#grid1").igGrid({
+                columns: gridColumns,
+                autoGenerateColumns: true,
+                dataSource: data,
+                width: "30%"
+				
+            });
+			
+			
+		}
+		
+		function createChart(data, gridColumns){
+			
+			if ($("#chart").data("igDataChart") !== undefined) {
+                $("#chart").igDataChart("destroy");
+            }
+			$("#chart").igDataChart({
+					dataSource: everyThreeYears,
+					width: "450px",
+					height: "450px",
+					title: "Energy Production Per Country",
+					subtitle: "The top three Total Primary Energy producers",
+					horizontalZoomable: true,
+					verticalZoomable: true,
+					axes: [{
+						type: "categoryX",
+						name: "xAxis",
+						label: "Year",
+						strokeThickness: 5,
+						title: "Year"
+					}, {
+						type: "numericY",
+						name: "prodPower",
+						minimumValue: 0,
+						maximumValue: 100,
+						strokeThickness: 5,
+						title: "Quadrillion Btu"
+					}, {
+						type: "numericY",
+						name: "totalPower",
+						minimumValue: 50,
+						maximumValue: 250,
+						labelLocation: "outsideRight",
+						title: "Quadrillion Btu",
+					}],
+					series: [{
+						type: "column",
+						isHighlightingEnabled: true,
+						isTransitionInEnabled: true,
+						name: "China",
+						title: "China",
+						xAxis: "xAxis",
+						yAxis: "prodPower",
+						valueMemberPath: "China",
+						showTooltip: true,
+						tooltipTemplate: "tooltipChina",
+						legend: { element: "legend" }
+					}, {
+						type: "column",
+						isHighlightingEnabled: true,
+						isTransitionInEnabled: true,
+						name: "UnitedStates",
+						title: "US",
+						xAxis: "xAxis",
+						yAxis: "prodPower",
+						valueMemberPath: "UnitedStates",
+						showTooltip: true,
+						tooltipTemplate: "tooltipUS",
+						legend: { element: "legend" }
+					}, {
+						type: "column",
+						isHighlightingEnabled: true,
+						isTransitionInEnabled: true,
+						name: "Russia",
+						title: "Russia",
+						xAxis: "xAxis",
+						yAxis: "prodPower",
+						valueMemberPath: "Russia",
+						showTooltip: true,
+						tooltipTemplate: "tooltipRussia",
+						legend: { element: "legend" }
+					}, {
+						type: "line",
+						isHighlightingEnabled: true,
+						isTransitionInEnabled: true,
+						name: "Total",
+						title: "Total Energy",
+						xAxis: "xAxis",
+						yAxis: "totalPower",
+						valueMemberPath: "Total",
+						brush: "Orange",
+						showTooltip: true,
+						tooltipTemplate: "tooltipTotal",
+						legend: { element: "legend2" }
+					}],
+					leftMargin: 5,
+					topMargin: 15
+				});
+		
+		
+		}
+		/*function graphCreate(){
+			var dps = []; //dataPoints. 
+            var chart = new CanvasJS.Chart("graphContainer", {
+                title: {
+                    text: "Accepting DataPoints from User Input"
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: dps
+                }]
+            });
+
+            function addDataPointsAndRender() {
+			alert("functioncall");
+			xValue = 0;
+                yValue = 0;
+				
+				
+					dps.push({
+						x: xValue,
+						y: yValue
+					});
+				
+                chart.render();
+            }
+
+            var renderButton = document.getElementById("renderButton");
+            renderButton.addEventListener("click", addDataPointsAndRender);
+        	
+        }*/		
+    </script>
+</body>
+
+</html>
