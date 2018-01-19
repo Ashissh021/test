@@ -1,0 +1,30 @@
+import csv
+import xlsxwriter
+workbook = xlsxwriter.Workbook('data.xlsx')
+worksheet = workbook.add_worksheet()
+
+rows = csv.reader(open("file.csv", "rb"))
+newrows = []
+for row in rows:
+    if row not in newrows:
+        newrows.append(row)
+writer = csv.writer(open("file.csv", "wb"))
+writer.writerows(newrows)
+
+
+wb = load_workbook(path, use_iterators=True)
+    sheet = wb.worksheets[0]
+
+    row_count = sheet.max_row
+    column_count = sheet.max_column
+
+
+worksheet.write('A1', 'Hello')
+workbook.close()
+
+workbook = xlsxwriter.Workbook('hello.xlsx')
+worksheet = workbook.add_worksheet()
+
+worksheet.write('A1', 'Hello world')
+
+workbook.close()
