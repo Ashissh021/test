@@ -1,0 +1,68 @@
+Sub Button3_Click()
+
+Dim iListCount As Integer
+Dim iCtr As Integer
+
+Dim main_sheet As Worksheet
+Set main_sheet = ThisWorkbook.Sheets(1)
+rowCountMainSheet = main_sheet.UsedRange.Rows.Count
+
+' Turn off screen updating to speed up macro.
+Application.ScreenUpdating = False
+
+' Get count of records to search through.
+'iListCount = Sheets("Sheet1").Range("A1:A100").Rows.Count
+iListCount = main_sheet.UsedRange.Rows.Count
+Sheets("Sheet1").Range("C1").Select
+' Loop until end of records.
+Do Until ActiveCell = ""
+   ' Loop through records.
+   
+   For iCtr = 1 To iListCount
+      ' Don't compare against yourself.
+      ' To specify a different column, change 1 to the column number.
+      If ActiveCell.Row <> Sheets("Sheet1").Cells(iCtr, 3).Row Then
+         ' Do comparison of next record.
+         If ActiveCell.Value = Sheets("Sheet1").Cells(iCtr, 3).Value Then
+            ' If match is true then delete row.
+            Sheets("Sheet1").Cells(iCtr, 3).Delete xlShiftUp
+               ' Increment counter to account for deleted row.
+               iCtr = iCtr + 1
+         End If
+      End If
+   Next iCtr
+   ' Go to next record.
+   ActiveCell.Offset(1, 0).Select
+Loop
+Application.ScreenUpdating = True
+MsgBox "Done!"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'Dim rng As Range
+'Dim counter As Long, numRows As Long
+'With ActiveSheet
+ '      Set rng = Range("C1").End(xlDown)
+ '       rng.RemoveDuplicates Columns:=Array(1), Header:=xlNo
+  
+
+'ActiveSheet.Range("C1").RemoveDuplicates Columns:=Array(1), Header:=xlYes
+
+ ' End With
+ 
+
+End Sub
