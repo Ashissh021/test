@@ -1,0 +1,284 @@
+<html>
+ <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.7/xlsx.core.min.js"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xls/0.7.4-a/xls.core.min.js"></script>
+	<!-- Ignite UI Required Combined CSS Files -->
+    <link type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/css/structure/infragistics.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/infragistics.core.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/infragistics.dv.js"></script>
+	 <!--<script type="text/javascript" src="https://www.igniteui.com/data-files/world-energy-production.js">    </script>-->
+	 
+	 
+	<!--  <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/infragistics.core.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/infragistics.lob.js"></script>
+
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_core.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_collections.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_text.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_io.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_ui.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.documents.core_core.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_collectionsextended.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.excel_core.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_threading.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.ext_web.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.xml.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.documents.core_openxml.js"></script>
+    <script type="text/javascript" src="http://cdn-na.infragistics.com/igniteui/2017.2/latest/js/modules/infragistics.excel_serialization_openxml.js"></script>
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>-->
+	
+<!--	<script type="text/javascript" src="C:\Users\ashriv13\Desktop\graph\New folder\highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/series-label.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script> -->
+	<!--<script type="text/javascript" src="C:\Users\ashriv13\Desktop\graph\New folder\jqxchart.core.js"/> -->
+	<link rel="stylesheet" href="https://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="https://www.jqwidgets.com/jquery-widgets-documentation/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxcore.js"></script>
+ <script type="text/javascript" src="https://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxchart.core.js"></script> 
+    <script type="text/javascript" src="https://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxdraw.js"></script>
+    <script type="text/javascript" src="https://www.jqwidgets.com/jquery-widgets-documentation/jqwidgets/jqxdata.js"></script>
+	 
+	 <style>
+       	#chartContainer {
+			position: absolute;
+			width: 800px;
+			height: 500px;
+			z-index: 15;
+			top: 25%;
+			left: 50%;
+			margin: -100px 0 0 -150px;
+}
+    </style>
+	 
+	 
+	 
+<script>
+function ExportToTable() { 
+     var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xlsx|.xls)$/;  
+     /*Checks whether the file is a valid excel file*/  
+     if (regex.test($("#excelfile").val().toLowerCase())) {  
+         var xlsxflag = false; /*Flag for checking whether excel is .xls format or .xlsx format*/  
+         if ($("#excelfile").val().toLowerCase().indexOf(".xlsx") > 0) {  
+             xlsxflag = true;  
+         }  
+         /*Checks whether the browser supports HTML5*/  
+         if (typeof (FileReader) != "undefined") {  
+             var reader = new FileReader();  
+             reader.onload = function (e) {  
+                 var data = e.target.result;  
+                 /*Converts the excel data in to object*/  
+                 if (xlsxflag) {  
+                     var workbook = XLSX.read(data, { type: 'binary' });  
+                 }  
+                 else {  
+                     var workbook = XLS.read(data, { type: 'binary' });  
+                 }  
+                 /*Gets all the sheetnames of excel in to a variable*/  
+                 var sheet_name_list = workbook.SheetNames;  
+  
+                 var cnt = 0; /*This is used for restricting the script to consider only first sheet of excel*/  
+                 sheet_name_list.forEach(function (y) { /*Iterate through all sheets*/  
+                     /*Convert the cell value to Json*/  
+                     if (xlsxflag) {  
+                         var exceljson = XLSX.utils.sheet_to_json(workbook.Sheets[y]);  
+                     }  
+                     else {  
+                         var exceljson = XLS.utils.sheet_to_row_object_array(workbook.Sheets[y]);  
+                     }  
+                     if (exceljson.length > 0 && cnt == 0) {  
+                         BindTable(exceljson, '#exceltable');  
+                         cnt++;  
+                     }  
+                 });  
+                 $('#exceltable').show();  
+             }  
+             if (xlsxflag) {/*If excel file is .xlsx extension than creates a Array Buffer from excel*/  
+                 reader.readAsArrayBuffer($("#excelfile")[0].files[0]);  
+             }  
+             else {  
+                 reader.readAsBinaryString($("#excelfile")[0].files[0]);  
+             }  
+         }  
+         else {  
+             console.log("Sorry! Your browser does not support HTML5!");  
+         }  
+     }  
+     else {  
+         console.log("Please upload a valid Excel file!");  
+     }  
+ } 
+function BindTable(jsondata, tableid) {/*Function used to convert the JSON array to Html Table*/  
+	var months = [];
+	var gacdata = [];
+	console.log(jsondata);
+	console.log(tableid);
+	
+     var columns = BindTableHeader(jsondata, tableid); /*Gets all the column headings of Excel*/  
+	 var data = [],  CountryPopulation = [];
+	 
+	 
+	console.log("columns:");
+	console.log(columns);
+	console.log("column length");
+	console.log(columns.length);
+	console.log("Json data length");
+	console.log(jsondata.length);
+	console.log(jsondata[0][columns[0]]);
+	console.log("columns 1");
+	console.log(jsondata[0][columns[1]]);
+	 
+     for (var i = 0; i < jsondata.length; i++) {  
+         var row$ = $('<tr/>');  
+		newRow = {};
+		
+         for (var colIndex = 0; colIndex < columns.length; colIndex++) {  
+             var cellValue = jsondata[i][columns[colIndex]];  
+			 console.log("cell Value",cellValue); // Month, Gac and Other
+			 
+			 newRow[jsondata[i][columns[colIndex]]] = cellValue;
+			if (cellValue == null)  
+                 cellValue = "";  
+             row$.append($('<td/>').html(cellValue));  
+         }
+		 
+         $(tableid).append(row$);  
+     }  
+	 console.log("data value:");
+	 console.log(data);
+	createChart(jsondata,tableid);
+ }  
+ 
+ function BindTableHeader(jsondata, tableid) {/*Function used to get all column names from JSON and bind the html table header*/  
+     var columnSet = [];  
+     var headerTr$ = $('<tr/>');  
+	 
+     for (var i = 0; i < jsondata.length; i++) {  
+		
+         var rowHash = jsondata[i];  
+		 for (var key in rowHash) {  
+			if (rowHash.hasOwnProperty(key)) {  
+                 if ($.inArray(key, columnSet) == -1) {/*Adding each unique column names to a variable array*/  
+                     columnSet.push(key);  
+                     headerTr$.append($('<th/>').html(key));  
+                 }  
+             }  
+         }  
+     }  
+     $(tableid).append(headerTr$); 
+		
+     return columnSet;  
+ }  
+ function createChart(jsondata,tableid){
+			var months = [];
+			
+			var gacList = [];
+			var gacList1 = [];
+			var nonGacList = [];
+			var avgList = [];
+			
+			var columns = BindTableHeader(jsondata, tableid);
+			if ($("#chart").data("igDataChart") !== undefined) {
+                $("#chart").igDataChart("destroy");
+            }
+			console.log(jsondata);
+			console.log(tableid);
+			console.log(months);
+			
+		for (var i = 0; i < jsondata.length; i++) {  
+			var row$ = $('<tr/>');  
+			newRow = {};
+			
+			months.push(jsondata[i].Month);
+			gacList.push(jsondata[i][columns[1]]);
+			nonGacList.push(jsondata[i][columns[2]]);
+			avgList.push(jsondata[i][columns[3]]);
+			
+			for (var colIndex = 0; colIndex < columns.length; colIndex++) {  
+				var cellValue = jsondata[i][columns[colIndex]];
+				console.log("Printing cell Value:", cellValue);
+				newRow[jsondata[i][columns[colIndex]]] = cellValue;		
+					if (cellValue == null)  
+						cellValue = "";  
+			}
+		}
+		
+		console.log("Printing Months value: ", months);
+		console.log("Printing Gac value: ", gacList);
+		console.log("Printing Non Gac Value: ", nonGacList);	
+			/*jsondata
+			{	Month: "Jul", Non-Gac Data: "15", Total: "132.5"}
+			{	Month: "Aug", Non-Gac Data: "10", Total: "122.5"}
+			{	Month: "Sep", Non-Gac Data: "20", Total: "122.5"}
+			{	Month: "Oct", Non-Gac Data: "35", Total: "120"}
+			{	Month: "Nov", Non-Gac Data: "10", Total: "90"}
+			{	Month: "Dec", Non-Gac Data: "20", Total: "90"}*/
+			
+			 var  sampleData = [
+                    { Day:'Monday', Keith:30, Erica:15, George: 25},
+                    { Day:'Tuesday', Keith:25, Erica:25, George: 30},
+                    { Day:'Wednesday', Keith:30, Erica:20, George: 25},
+                    { Day:'Thursday', Keith:35, Erica:25, George: 45},
+                    { Day:'Friday', Keith:20, Erica:20, George: 25},
+                    { Day:'Saturday', Keith:30, Erica:20, George: 30},
+                    { Day:'Sunday', Keith:60, Erica:45, George: 90}
+                ];
+			
+			var settings = {
+                title: "Gac Application chart",
+                description: "No of Application used as Gac",
+                padding: { left: 5, top: 5, right: 5, bottom: 5 },
+                titlePadding: { left: 90, top: 0, right: 0, bottom: 10 },
+                source: jsondata,//sampleData,
+                categoryAxis:
+                    {
+                        dataField: 'Month',//'Day',
+                        showGridLines: false
+                    },
+                colorScheme: 'scheme01',
+                seriesGroups:
+                    [
+                        {
+                            type: 'column',
+                            columnsGapPercent: 30,
+                            seriesGapPercent: 0,
+                            valueAxis:
+                            {
+                                minValue: 0,
+                                maxValue: 500,
+                                unitInterval: 50,
+                                description: 'Time ----->'
+                            },
+                            series: [
+                                    { dataField: 'GacData', displayText: 'GacData'},
+                                    { dataField: 'Non-Gac Data', displayText: 'Non-Gac Data'},
+                                    { dataField: 'Total', displayText: 'Total'}
+                                ]
+                        }
+                    ]
+			
+			};
+			$('#chartContainer').jqxChart(settings);	
+		}
+</script>
+<input type="file" id="excelfile" /> 
+ 
+   <input type="button" id="viewfile" value="Export To Table" onclick="ExportToTable()" />  
+      <br />  
+      <br />  
+   <table id="exceltable">  
+   </table>
+     <div id="graph"></div>
+	 <div id='chartContainer' style="width:600px; height: 400px"/>
+</html>
