@@ -1,0 +1,95 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Jan 22 08:33:09 2018
+
+@author: ashriv13
+"""
+
+#Import os module
+import os
+import re
+import array
+import xlsxwriter
+
+# Ask the user to enter string to search
+#search_path = input("Enter directory path to search : ")
+#file_type = input("File Type : ")
+#search_str = input("Enter the search string : ")
+
+search_path = "C:/Users/ashriv13/Desktop/graphcount/"
+file_type = "pyth.txt"
+search_str = "8f2ec143b7c9fe6c"
+count = 0
+excel_List = []
+i = 0
+# Append a directory separator if not already present
+if not (search_path.endswith("/") or search_path.endswith("\\") ): 
+        search_path = search_path + "/"
+                                                          
+# If path does not exist, set search path to current directory
+if not os.path.exists(search_path):
+        search_path ="."
+
+# Repeat for each file in the directory  
+for fname in os.listdir(path=search_path):
+
+   # Apply file type filter   
+   if fname.endswith(file_type):
+
+        # Open file for reading
+        fo = open(search_path + fname)
+
+        # Read the first line from the file
+        line = fo.readline()
+
+        # Initialize counter for line number
+        line_no = 1
+            
+        # Loop until EOF
+        while line != '' :
+                # Search for string in line
+                index = line.find(search_str)
+               
+                if ( index != -1) :
+                    print(fname, "[", line_no, ",", index, "] ", line, sep="")
+                    count = count + 1
+                    excel_List.append(line.split(',')[0])
+                    i = i+1
+                # Read next line
+                line = fo.readline()  
+                
+                # Increment line counter
+                line_no += 1
+
+        # Close the files
+        fo.close()
+    
+    # Create an new Excel file and add a worksheet.
+        workbook = xlsxwriter.Workbook('dataCount.xlsx')
+        worksheet = workbook.add_worksheet()
+    
+    # Widen the first column to make the text clearer.
+        worksheet.set_column('A:A', 20)
+
+    # Add a bold format to use to highlight cells.
+        bold = workbook.add_format({'bold': True})
+
+    for value in excel_List :
+        worksheet.write('A1',value)
+        
+        workbook.close()    
+ 
+        
+print("Total number of line ",count)
+print("Printing excel list", excel_List);
+print("Printing 10 th row excel list", excel_List[10]);
+print("Printing 501 row excel list", excel_List[501]);
+print("Printing 508 row excel list", excel_List[507]);
+
+
+
+
+
+
+
+
